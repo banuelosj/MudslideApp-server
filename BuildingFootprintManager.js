@@ -58,13 +58,15 @@ const BuildFootprintManager = function(){
 
         const allRequests = features.map(d=>{
 
-            const location = {...d.centroid, "spatialReference": {
+            // const location = {...d.centroid, "spatialReference": {
+            //     "wkid": 3857
+            // }};
+
+            const location = d.centroid;
+            
+            location.spatialReference = {
                 "wkid": 3857
-            }};
-            // console.log(location);
-            // return reverseGeocode(location).then(addr=>{
-            //     console.log('reverseGeocode result', addr);
-            // });
+            };
 
             return reverseGeocode(location);
         });
