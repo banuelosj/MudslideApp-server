@@ -18,7 +18,7 @@ const BuildFootprintManager = function(){
         const params = {
             where: '1=1',
             geometry: options.geometry,
-            geometryType: 'esriGeometryEnvelope',
+            geometryType: 'esriGeometryPolygon',
             spatialRel: 'esriSpatialRelIntersects',
             returnGeometry: false,
             returnCentroid: true,
