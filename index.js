@@ -2,7 +2,10 @@ const express = require('express');
 const path = require("path");
 
 const BuildingFootprintManager = require('./BuildingFootprintManager');
+const MudslideRiskAreaManager = require('./MudslideRiskAreaManager');
+
 const bfpManager = new BuildingFootprintManager();
+const riskAreaManager = new MudslideRiskAreaManager();
 
 const app = express();
 const port = process.env.PORT || 8500;
@@ -16,6 +19,31 @@ app.use(function(req, res, next) {
 app.get('/', function(req, res) {
     // res.json({"version": "0.1"});
     res.sendFile(path.join(__dirname + '/public/index.html'));
+});
+
+app.get('/queryRiskAreas', function(req, res) {
+
+    // http://localhost:8500/queryBuildings?geometry={%20%22xmin%22:-13266737.147852018,%20%22ymin%22:4046834.352006209,%20%22xmax%22:-13265819.903512599,%20%22ymax%22:4047751.59634563,%20%22spatialReference%22:{%22wkid%22:102100,%22latestWkid%22:3857}%20}
+
+    const extent = req.query.extent;
+
+    // console.log(req.query);
+
+    if(!extent){
+        res.send({
+            error: 'input extent is required to query risk areas'
+        });
+    } else {
+
+        riskAreaManager.getRiskAreasByExtent(extent).then(results=>{
+            // console.log(results);
+            res.send(results);
+        }).catch(error=>{
+            res.send(error);
+        });
+
+    }
+
 });
 
 

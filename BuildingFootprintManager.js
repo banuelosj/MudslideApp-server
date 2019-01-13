@@ -46,21 +46,7 @@ const BuildFootprintManager = function(){
 
     const batchReverseGeocode = (features)=>{
 
-        // features.forEach(d=>{
-        //     const location = {...d.centroid, "spatialReference": {
-        //         "wkid": 3857
-        //     }};
-        //     // console.log(location);
-        //     reverseGeocode(location).then(addr=>{
-        //         console.log('reverseGeocode result', addr);
-        //     });
-        // });
-
         const allRequests = features.map(d=>{
-
-            // const location = {...d.centroid, "spatialReference": {
-            //     "wkid": 3857
-            // }};
 
             const location = d.centroid;
             
