@@ -18,7 +18,7 @@ const BuildFootprintManager = function(){
         const params = {
             where: '1=1',
             geometry: options.geometry,
-            geometryType: 'esriGeometryPolygon',
+            geometryType: options.geometry.rings ? 'esriGeometryPolygon' : 'esriGeometryEnvelope',
             spatialRel: 'esriSpatialRelIntersects',
             returnGeometry: false,
             returnCentroid: true,
@@ -98,7 +98,7 @@ const BuildFootprintManager = function(){
     const getBuildingAddresses = (options={
         geometry: null
     })=>{
-        // console.log()
+        // console.log('calling getBuildingAddresses');
 
         return new Promise((resolve, reject)=>{
             queryBuildFootprintFeatures({

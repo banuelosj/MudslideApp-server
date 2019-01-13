@@ -21,9 +21,32 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
-app.get('/queryRiskAreas', function(req, res) {
+app.get('/queryAddressesInRiskAreas', function(req, res) {
 
-    // http://localhost:8500/queryBuildings?geometry={%20%22xmin%22:-13266737.147852018,%20%22ymin%22:4046834.352006209,%20%22xmax%22:-13265819.903512599,%20%22ymax%22:4047751.59634563,%20%22spatialReference%22:{%22wkid%22:102100,%22latestWkid%22:3857}%20}
+    const extent = req.query.extent;
+
+    // console.log(req.query);
+
+    if(!extent){
+        res.send({
+            error: 'input extent is required to queryAddressesInRiskAreas'
+        });
+    } else {
+
+        riskAreaManager.getRiskAreasByExtent(extent)
+        .then(riskAreaManager.getAddressesInRiskArea)
+        .then(results=>{
+            res.send(results);
+        })
+        .catch(error=>{
+            console.log(error);
+        });
+
+    }
+
+});
+
+app.get('/queryRiskAreas', function(req, res) {
 
     const extent = req.query.extent;
 
